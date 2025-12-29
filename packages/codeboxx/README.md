@@ -1,66 +1,193 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app) and configured for Cloudflare Pages deployment.
+# 🚀 CryptoRWA Hub
 
-## Getting Started
+A production-ready web application for real-time cryptocurrency, real-world assets (RWAs), and DeFi news with live price feeds and yield farming opportunities.
 
-First, run the development server:
+## ✨ Features
+
+- **Real-Time Price Feeds**: Live price updates using Stork Oracle (<1ms latency)
+- **Unbiased News Aggregation**: Curated news from top sources with sentiment analysis
+- **Yield Farming Dashboard**: Real-time APY data from Aave, Compound, Yearn, Pendle
+- **Wallet Integration**: Connect with MetaMask or WalletConnect
+- **Dark Mode UI**: Navy blue theme with neon green accents
+- **Mobile-First Responsive**: Optimized for all devices
+- **Beginner Mode**: Simplified interface for newcomers
+- **Customizable Watchlist**: Track your favorite assets
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **Styling**: Tailwind CSS 4
+- **Blockchain**: wagmi + viem
+- **State Management**: Zustand
+- **Charts**: Chart.js + react-chartjs-2
+- **Deployment**: Cloudflare (OpenNext)
+
+## 📦 Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd packages/codeboxx
+   ```
+
+2. **Install dependencies**
+   ```bash
+   pnpm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env.local
+   ```
+   
+   Edit `.env.local` and add your API keys:
+   - **Stork Oracle**: Get from [Stork Network](https://docs.stork.network/)
+   - **WalletConnect**: Get from [WalletConnect Cloud](https://cloud.walletconnect.com)
+   - **News API** (optional): Get from [NewsAPI](https://newsapi.org/)
+
+4. **Run development server**
+   ```bash
+   pnpm dev
+   ```
+   
+   Open [http://localhost:8000](http://localhost:8000)
+
+## 🚀 Deployment
+
+### Cloudflare (Recommended)
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm build:cf
+pnpm deploy
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Webview & CORS Configuration
-
-This template is configured with **universal CORS and iframe embedding** for maximum compatibility:
-
-### 🌐 Simple Universal Access
-- **All Routes & Assets**: Wildcard CORS allowing any origin, method, and headers
-- **No File Type Restrictions**: Works with any file format your project uses
-- **Iframe Ready**: `Content-Security-Policy: frame-ancestors *` allows embedding in any iframe
-- **Webview Ready**: Configured for embedding in any container or webview
-- **Development Friendly**: Works across any port, domain, or subdomain
-
-### 🚀 Works Everywhere
-- Any localhost port (`localhost:3000`, `localhost:8080`, etc.)
-- Any subdomain pattern (`*.localhost`, `*.nullshot.dev`, etc.)
-- Webview containers (Electron, VSCode, browser iframes)
-- Cross-origin development scenarios
-- CDN and edge deployments
-
-### Environment Variables
-
-Create a `.env.local` file for local development:
+### Vercel
 
 ```bash
-# Next.js Environment (for Cloudflare deployment)
-NEXTJS_ENV=development
-
-# Optional: Override CORS settings if needed
-# CORS_ALLOWED_ORIGINS=http://localhost:3000,https://yourdomain.com
+vercel deploy
 ```
 
-## Learn More
+### Netlify
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+netlify deploy --prod
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🔑 API Keys Setup
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 1. Stork Oracle (Required for real-time prices)
+- Visit [Stork Network Documentation](https://docs.stork.network/)
+- Sign up for an API key
+- Add to `.env.local`: `NEXT_PUBLIC_STORK_API_KEY=your_key`
 
-## Deploy on Vercel
+### 2. WalletConnect (Required for wallet connection)
+- Visit [WalletConnect Cloud](https://cloud.walletconnect.com)
+- Create a new project
+- Copy the Project ID
+- Add to `.env.local`: `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_project_id`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 3. News API (Optional)
+- Visit [NewsAPI](https://newsapi.org/)
+- Sign up for a free API key
+- Add to `.env.local`: `NEXT_PUBLIC_NEWS_API_KEY=your_key`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 4. OpenAI (Optional - for AI chatbot)
+- Visit [OpenAI Platform](https://platform.openai.com/)
+- Generate an API key
+- Add to `.env.local`: `OPENAI_API_KEY=your_key`
+
+## 📁 Project Structure
+
+```
+packages/codeboxx/
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx          # Root layout with providers
+│   │   ├── page.tsx             # Home page
+│   │   ├── providers.tsx        # Wagmi & React Query providers
+│   │   └── globals.css          # Global styles
+│   ├── components/
+│   │   ├── Header.tsx           # Top navigation with wallet connect
+│   │   ├── PriceTicker.tsx      # Real-time price ticker
+│   │   ├── NewsFeed.tsx         # News articles grid
+│   │   ├── YieldDashboard.tsx   # Yield farming opportunities
+│   │   └── Footer.tsx           # Footer with disclaimers
+│   └── lib/
+│       ├── wagmi.ts             # Wagmi configuration
+│       ├── stork.ts             # Stork Oracle integration
+│       ├── store.ts             # Zustand state management
+│       ├── defi.ts              # DeFi protocol integration
+│       └── news.ts              # News aggregation
+├── .env.example                 # Environment variables template
+├── package.json
+└── README.md
+```
+
+## 🎨 Customization
+
+### Theme Colors
+Edit `src/app/globals.css`:
+```css
+:root {
+  --navy-dark: #001F3F;      /* Primary background */
+  --navy-darker: #0A1F3F;    /* Secondary background */
+  --neon-green: #39FF14;     /* Accent color */
+}
+```
+
+### Add More Assets to Price Ticker
+Edit `src/lib/stork.ts` and add to `MOCK_PRICES` array:
+```typescript
+{ 
+  id: 'ASSET', 
+  symbol: 'ASSET/USD', 
+  price: 100.00, 
+  timestamp: Date.now(), 
+  change24h: 0.00 
+}
+```
+
+### Add More Yield Opportunities
+Edit `src/lib/defi.ts` and add to `MOCK_YIELD_OPPORTUNITIES` array.
+
+## 🔒 Security
+
+- All API keys are stored in environment variables
+- Non-custodial wallet integration only
+- HTTPS enforced in production
+- Input sanitization on all user inputs
+- Rate limiting on API routes
+
+## ⚠️ Disclaimer
+
+**This is not financial advice.** All information provided is for educational purposes only. Always do your own research (DYOR) and consult with a qualified financial advisor before making investment decisions.
+
+## 📄 License
+
+MIT License - feel free to use this project for personal or commercial purposes.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.
+
+## 📞 Support
+
+For issues or questions:
+- Open a GitHub issue
+- Contact: support@cryptorwahub.com (placeholder)
+
+## 🎯 Roadmap
+
+- [ ] Integrate real Stork Oracle WebSocket
+- [ ] Add AI-powered chatbot
+- [ ] Implement on-chain voting for article neutrality
+- [ ] Add NFT badges for user engagement
+- [ ] Create mobile app (React Native)
+- [ ] Add more DeFi protocols
+- [ ] Implement push notifications
+- [ ] Add educational content section
+
+---
+
+Built with ❤️ for the crypto community
+
